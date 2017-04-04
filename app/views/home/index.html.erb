@@ -1,0 +1,18 @@
+<p>Signed in as <b><%= session[:current_user] %></b>&nbsp;<%= link_to 'logout', destroy_user_session_path, method: :delete %>.</p>
+
+<div id='messages'></div>
+
+<%= form_tag new_message_path, id: :form_message, method: :post, remote: true do %>
+  <%= text_field_tag :content %>
+  <%= hidden_field_tag :user, session[:current_user] %>
+  <%= hidden_field_tag :language, session[:current_language] %>
+  <%= submit_tag 'send' %>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+    $('#form_message').on('ajax:success', function(){
+      this.reset();
+    })
+  });
+</script>
