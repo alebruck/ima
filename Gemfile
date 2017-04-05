@@ -35,10 +35,19 @@ gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# HTTP client library
+gem 'faraday'
+# HTML parser gem
+gem 'nokogiri'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
+end
+
+group :test do
+  gem 'vcr'
 end
 
 group :development do
