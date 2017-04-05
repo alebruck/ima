@@ -5,10 +5,29 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
   },
 
   processData: function(data) {
-    return '<p>' + data.user + '(' + data.language + '): ' + this.renderMessage(data.message) + '</p>';
+    var content = data.chat
+    var conection = data.conection
+
+    if(conection) {
+      return this.newConectionStatus(conection)
+    } else if(content) {
+      return this.renderMessage(content);
+    } else {
+      return ''
+    }
   },
 
-  renderMessage: function(message) {
-    return message
+  renderMessage: function(content) {
+    return '<p>' + content.user + '(' + content.language + '): ' + content.message + '</p>'
+  },
+
+  newConectionStatus: function(conection) {
+    var user = conection.user
+    if(conection.conected) {
+      status = 'conected'
+    } else if(conection.disconected) {
+      status = 'disconected'
+    }
+    return  user + ' ' + status + '!<br>'
   }
 });

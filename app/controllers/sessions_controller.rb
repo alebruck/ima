@@ -9,12 +9,24 @@ class SessionsController < ApplicationController
     session[:current_user] = nil
     session[:current_language] = nil
 
+    ActionCable.server.broadcast 'messages',
+      conection: {
+        user: params[:user],
+        disconected: true
+      }
+
     redirect_to new_user_session_path
   end
 
   def create
     session[:current_user] = params[:user]
     session[:current_language] = params[:language]
+
+    ActionCable.server.broadcast 'messages',
+      conection: {
+        user: params[:user],
+        conected: true
+      }
 
     redirect_to root_path
   end
