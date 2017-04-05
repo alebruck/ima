@@ -6,14 +6,14 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:current_user] = nil
-    session[:current_language] = nil
-
     ActionCable.server.broadcast 'messages',
       conection: {
-        user: params[:user],
+        user: session[:current_user],
         disconected: true
       }
+
+    session[:current_user] = nil
+    session[:current_language] = nil
 
     redirect_to new_user_session_path
   end
