@@ -1,0 +1,28 @@
+body {
+  background-color: #D8EAF8 !important;
+
+}
+
+#messages {
+  width: 100%;
+  height: 200px;
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 5px;
+  img {
+    height: 30px;
+    width: 30px;
+  }
+
+  .user-message {
+    margin-left: 5px;
+  }
+
+  .message-row {
+    padding: 5px;
+  }
+}
+
+#content {
+}

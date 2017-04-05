@@ -1,13 +1,20 @@
-<p>Signed in as <b><%= session[:current_user] %></b>&nbsp;<%= link_to 'logout', destroy_user_session_path, method: :delete %>.</p>
+<div class="container">
+  <div class="pull-right">
+    <p>Signed in as <b><%= session[:current_user] %></b>&nbsp;<%= link_to 'logout', destroy_user_session_path, method: :delete %>.</p>
+  </div>
+  <div id='messages'></div>
 
-<div id='messages'></div>
-
-<%= form_tag new_message_path, id: :form_message, method: :post, remote: true do %>
-  <%= text_field_tag :content %>
-  <%= hidden_field_tag :user, session[:current_user] %>
-  <%= hidden_field_tag :language, session[:current_language] %>
-  <%= submit_tag 'send' %>
-<% end %>
+  <%= form_tag new_message_path, id: :form_message, method: :post, remote: true do %>
+    <%= hidden_field_tag :user, session[:current_user] %>
+    <%= hidden_field_tag :language, session[:current_language] %>
+    <div class="row">
+      <div class="col col-lg-12">
+        <%= text_field_tag :content, nil, class: 'form-control', autofocus: true, required: true %>
+        <%= submit_tag 'send', class: 'btn btn-primary pull-right' %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <script>
   $(document).ready(function(){

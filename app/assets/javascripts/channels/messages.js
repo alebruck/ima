@@ -13,12 +13,21 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
     } else if(content) {
       return this.renderMessage(content);
     } else {
-      return ''
+      return '';
     }
   },
 
   renderMessage: function(content) {
-    return '<p>' + content.user + '(' + content.language + '): ' + content.message + '</p>'
+    return '<div class="row message-row"><div class="col col-lg-9">' + this.renderUserImage(content.language) + '<span class="user-message"><b>' + content.user + '</b>: ' + content.message + '</span></div><div class="col col-lg-3">' + this.renderMessageTime() + '</div></div>';
+  },
+
+  renderMessageTime: function() {
+    return '<span class="pull-right">' + new Date().toLocaleString() + '</span>'
+  },
+
+  renderUserImage: function(language) {
+    var asset = language.replace(/\s+/g, '-').toLowerCase();
+    return '<img src="/assets/'+ asset +'">'
   },
 
   newConectionStatus: function(conection) {
@@ -28,6 +37,6 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
     } else if(conection.disconected) {
       status = 'disconected'
     }
-    return  user + ' ' + status + '!<br>'
+    return  '<i><small>' + user + ' ' + status + '!</small></i><br>';
   }
 });
