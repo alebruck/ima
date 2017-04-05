@@ -20,7 +20,11 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
   },
 
   renderMessage: function(content) {
-    return '<div class="row message-row"><div class="col col-lg-9">' + this.renderUserImage(content.language) + '<span class="user-message"><b>' + content.user + '</b>: ' + content.message + '</span></div><div class="col col-lg-3">' + this.renderMessageTime() + '</div></div>';
+    return '<div class="row message-row"><div class="col col-lg-9">' + this.renderUserImage(content.language) + '<span class="user-message"><b>' + content.user + '</b>: ' + this.renderMessageStyle(content.message) + '</span></div><div class="col col-lg-3">' + this.renderMessageTime() + '</div></div>';
+  },
+
+  renderMessageStyle: function(message) {
+    return urlify(message);
   },
 
   renderMessageTime: function() {
@@ -42,3 +46,10 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
     return  '<i><small>' + user + ' ' + status + '!</small></i><br>';
   }
 });
+
+function urlify(text) {
+  var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(urlRegex, function(url) {
+      return '<a href="' + url + '" target="_blank">' + url + '</a>';
+  })
+}
